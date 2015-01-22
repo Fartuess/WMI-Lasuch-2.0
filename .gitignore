@@ -1,0 +1,4 @@
+/server/jms-server/target/
+/server/restServer/target/
+/server/solrConnector/target/
+/server/common/target/
