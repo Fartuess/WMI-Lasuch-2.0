@@ -28,6 +28,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
+        <dependency>
+            <groupId>pl.edu.amu.lasuch</groupId>
+            <artifactId>common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
 
     </dependencies>
 </project>

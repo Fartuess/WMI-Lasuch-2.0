@@ -17,4 +17,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>pl.edu.amu.lasuch</groupId>
+            <artifactId>common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>
