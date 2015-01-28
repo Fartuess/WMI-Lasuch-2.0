@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.amu.edu.lasuch.restServer.Solr;
+package pl.edu.amu.lasuch.solr;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
