@@ -6,6 +6,7 @@
 package pl.edu.amu.lasuch.model;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,16 +16,14 @@ import java.util.Map;
 public class Product {
     private int id;
     private String name;
-    private String producer;
-    private String seller;
+    private String info;
     private String url;
-    private Map<String, Double> ingredients;
+    private List<String> ingredients;
 
-    public Product(int id, String name, String producer, String seller, String url, Map<String, Double> ingredients) {
+    public Product(int id, String name, String info, String url, List<String> ingredients) {
         this.id = id;
         this.name = name;
-        this.producer = producer;
-        this.seller = seller;
+        this.info = info;
         this.url = url;
         this.ingredients = ingredients;
     }
@@ -45,20 +44,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getProducer() {
-        return producer;
+    public String getInfo() {
+        return info;
     }
 
-    public void setProducer(String producer) {
-        this.producer = producer;
-    }
-
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public String getUrl() {
@@ -69,11 +60,11 @@ public class Product {
         this.url = url;
     }
 
-    public Map<String, Double> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Map<String, Double> ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
     

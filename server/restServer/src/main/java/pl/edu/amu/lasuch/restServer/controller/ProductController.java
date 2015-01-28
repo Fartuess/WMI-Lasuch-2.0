@@ -5,6 +5,9 @@
  */
 package pl.edu.amu.lasuch.restServer.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.amu.edu.lasuch.restServer.Solr.Doc;
+import pl.amu.edu.lasuch.restServer.Solr.SolrConnection;
 import pl.edu.amu.lasuch.model.Product;
 
 /**
@@ -23,24 +28,36 @@ import pl.edu.amu.lasuch.model.Product;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+    private final SolrConnection solrConnection = new SolrConnection();
     
     @RequestMapping(method = RequestMethod.GET)
-    public List<Product> products(){
+    public List<Product> products() throws URISyntaxException, IOException{
         List<Product> result = new ArrayList<Product>();
+        List<Doc> docs = solrConnection.GetAll();
+        for (Doc d : docs) {
+            Product p = new Product(d.getID(), d.getTitle(), d.getInfo(), d.getUrl(), d.getIngredient());
+            result.add(p);
+        }
         
         return result;
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Product getById(@PathVariable int id) {
-        Product result = new Product(1, "test", "test", "test", "test", null);
-        return result;
+    public Product getById(@PathVariable int id) throws MalformedURLException, IOException {
+        Doc doc = solrConnection.findOneProduct("ID", Integer.toString(id));
+        return new Product(doc.getID(), doc.getTitle(), doc.getInfo(), doc.getUrl(), doc.getIngredient());
     }
     
     @RequestMapping(value="/search", method = RequestMethod.GET)
-    public List<Product> search(@RequestParam("q") String query) {
+    public List<Product> search(@RequestParam("q") String query) throws URISyntaxException, IOException {
         List<Product> result = new ArrayList<Product>();
-        System.out.print(query);
+        
+        List<Doc> docs = solrConnection.searchProducts("ingredient", query);
+        for (Doc d : docs) {
+            Product p = new Product(d.getID(), d.getTitle(), d.getInfo(), d.getUrl(), d.getIngredient());
+            result.add(p);
+        }
+        
         return result;
     }
     

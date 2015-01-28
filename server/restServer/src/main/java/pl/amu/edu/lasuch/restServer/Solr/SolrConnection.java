@@ -28,6 +28,16 @@ public class SolrConnection {
     public SolrConnection() {
     }
     
+    public List<Doc> GetAll() throws MalformedURLException, URISyntaxException, IOException {
+        String connectionResult = getRawResponse();
+        
+        Gson gson = new Gson();
+        SolrResponse responseObject = gson.fromJson(connectionResult, SolrResponse.class);
+        List<Doc> result = responseObject.getResponse().getDocs();
+        
+        return result;
+    }
+    
     public List<Doc> searchProducts(String searchField, String searchText) throws MalformedURLException, URISyntaxException, IOException {
         String connectionResult = getRawResponse(searchField, searchText);
         
@@ -61,6 +71,26 @@ public class SolrConnection {
             result = responseObject.getResponse().getDocs().get(0);
         
         return result;
+    }
+    
+    private String getRawResponse() throws UnsupportedEncodingException, MalformedURLException, IOException {
+        String parametersString = "http://localhost:8983/solr/collection1/select?q=*:*&wt=json&indent=true";
+
+        URL url = new URL(parametersString);
+        URLConnection connection = url.openConnection();
+        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                connection.getInputStream()));
+        
+        String line;    
+        String connectionResult = "";
+        
+        while ((line = in.readLine()) != null) 
+            connectionResult += line;
+        
+        in.close();
+        
+        return connectionResult;
     }
     
     private String getRawResponse(String searchField, String attribute) throws UnsupportedEncodingException, MalformedURLException, IOException {
