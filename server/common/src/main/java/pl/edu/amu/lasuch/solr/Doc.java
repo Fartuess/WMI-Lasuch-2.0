@@ -3,7 +3,11 @@ package pl.edu.amu.lasuch.solr;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Generated;
+
+import pl.edu.amu.lasuch.model.Product;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -142,4 +146,13 @@ public class Doc {
         this.sodium = sodium;
     }
 
+    public static Doc fromProduct(Product p) {
+		Doc productDocument = new Doc();
+		productDocument.setID(p.getId());
+		productDocument.setTitle(p.getName());
+		productDocument.setInfo(p.getInfo());
+		productDocument.setUrl(p.getUrl());
+		productDocument.setIngredient(p.getIngredients());
+		return productDocument;
+    }
 }
