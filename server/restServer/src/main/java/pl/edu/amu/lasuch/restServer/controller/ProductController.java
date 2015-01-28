@@ -10,6 +10,10 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.amu.edu.lasuch.restServer.Solr.Doc;
 import pl.amu.edu.lasuch.restServer.Solr.SolrConnection;
+import pl.amu.edu.lasuch.restServer.service.SolrUpdateService;
 import pl.edu.amu.lasuch.model.Product;
 
 /**
@@ -29,6 +34,8 @@ import pl.edu.amu.lasuch.model.Product;
 @RequestMapping("/products")
 public class ProductController {
     private final SolrConnection solrConnection = new SolrConnection();
+    @Autowired
+    private ApplicationContext context;
     
     @RequestMapping(method = RequestMethod.GET)
     public List<Product> products() throws URISyntaxException, IOException{
@@ -63,7 +70,7 @@ public class ProductController {
     
     @RequestMapping(method = RequestMethod.POST)
     public Product addProduct(@RequestBody Product product) {
-        
+        SolrUpdateService solrUpdateService = (SolrUpdateService) context.getBean("solrUpdateService");
         return product;
     }
 }

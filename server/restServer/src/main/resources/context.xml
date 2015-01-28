@@ -25,4 +25,15 @@
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
+    
+    <bean id="productQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="productQueue"/>
+    </bean>
+    
+    <bean id="productJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestination" ref="productQueue"/>
+        <property name="messageConverter" ref="productConverter"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
 </beans>
