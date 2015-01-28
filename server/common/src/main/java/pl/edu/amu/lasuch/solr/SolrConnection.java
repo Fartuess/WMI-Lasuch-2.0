@@ -5,6 +5,7 @@
 package pl.edu.amu.lasuch.solr;
 
 import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +18,8 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.edu.amu.lasuch.model.Product;
 
 /**
  *
@@ -65,7 +68,7 @@ public class SolrConnection {
         Gson gson = new Gson();
         SolrResponse responseObject = gson.fromJson(connectionResult, SolrResponse.class);
         Doc result = new Doc();
-        result.setTitle("Nie znaleziono produktu");
+        result.setTitle(Strings.PRODUCT_NOT_FOUND);
         
         if (responseObject.getResponse().getDocs().size() != 0)
             result = responseObject.getResponse().getDocs().get(0);
@@ -74,8 +77,8 @@ public class SolrConnection {
     }
     
     private String getRawResponse() throws UnsupportedEncodingException, MalformedURLException, IOException {
-        String parametersString = "http://localhost:8983/solr/collection1/select?q=*:*&wt=json&indent=true";
-
+        //String parametersString = "http://localhost:8983/solr/collection1/select?q=*:*&wt=json&indent=true";
+    	String parametersString = Strings.URL_SELECT_ALL;
         URL url = new URL(parametersString);
         URLConnection connection = url.openConnection();
         BufferedReader in = new BufferedReader(
@@ -95,8 +98,8 @@ public class SolrConnection {
     
     private String getRawResponse(String searchField, String attribute) throws UnsupportedEncodingException, MalformedURLException, IOException {
         String searchText = URLEncoder.encode(attribute.replace(" ", "\\ "), "UTF-8");
-        String parametersString = "http://localhost:8983/solr/collection1/select?q=" + searchField + ":".concat(searchText.concat("&wt=json&indent=true"));
-
+       //String parametersString = "http://localhost:8983/solr/collection1/select?q=" + searchField + ":".concat(searchText.concat("&wt=json&indent=true"));
+        String parametersString = String.format(Strings.URL_SELECT2, searchField, searchText);
         URL url = new URL(parametersString);
         URLConnection connection = url.openConnection();
         BufferedReader in = new BufferedReader(
@@ -118,7 +121,8 @@ public class SolrConnection {
             String secondSearchField, String secondAttribute) throws UnsupportedEncodingException, MalformedURLException, IOException {
         String searchText1 = URLEncoder.encode(firstAttribute.replace(" ", "\\ "), "UTF-8");
         String searchText2 = URLEncoder.encode(secondAttribute.replace(" ", "\\ "), "UTF-8");
-        String parametersString = "http://localhost:8983/solr/collection1/select?q=" + firstSearchField + ":" + searchText1 + "%20" + secondSearchField + ":" + searchText2 + "&wt=json&indent=true";
+        String parametersString = String.format(Strings.URL_SELECT4, firstSearchField, searchText1, secondSearchField, searchText2);
+        //String parametersString = "http://localhost:8983/solr/collection1/select?q=" + firstSearchField + ":" + searchText1 + "%20" + secondSearchField + ":" + searchText2 + "&wt=json&indent=true";
         parametersString = parametersString.replace("%3F", "");
 
         URL url = new URL(parametersString);
@@ -136,5 +140,9 @@ public class SolrConnection {
         in.close();
         
         return connectionResult;
+    }
+    
+    public void addProduct(Product product) {
+    	
     }
 }
