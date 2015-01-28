@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jms-server/jmsServer.iml" filepath="$PROJECT_DIR$/jms-server/jmsServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lasuch.iml" filepath="$PROJECT_DIR$/lasuch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restServer/restServer.iml" filepath="$PROJECT_DIR$/restServer/restServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/solrConnector/solrConnector.iml" filepath="$PROJECT_DIR$/solrConnector/solrConnector.iml" />
+    </modules>
+  </component>
+</project>
+
