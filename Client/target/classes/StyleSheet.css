@@ -1,0 +1,15 @@
+.container
+{
+     -fx-background-color: #FDFDFB;
+     -fx-padding: 5px;
+     -fx-spacing: 5px;
+}
+
+.text-field
+{
+/*
+    -fx-border-color: black;
+    -fx-border-radius: 0px;
+    -fx-background-image: none;
+    */
+}

@@ -18,4 +18,6 @@ public class Application
 		restTemplate.getMessageConverters().add(new Jaxb2CollectionHttpMessageConverter<Collection>());
 		return restTemplate;
 	}
+
+
 }
