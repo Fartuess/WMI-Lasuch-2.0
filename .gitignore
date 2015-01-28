@@ -2,4 +2,6 @@
 /server/restServer/target/
 /server/solrConnector/target/
 /server/common/target/
+/server/.idea/
+/Client/.idea/
 /server/jms-server/activemq-data/

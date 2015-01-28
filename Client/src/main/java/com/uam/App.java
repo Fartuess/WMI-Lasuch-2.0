@@ -1,6 +1,8 @@
 package com.uam;
 
 import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,6 +30,7 @@ public class App extends Application
 {
     public static void main(String[] args)
     {
+        RestProductSearch searchClass = new RestProductSearch();
         launch(args);
     }
 
@@ -45,7 +48,7 @@ public class App extends Application
         firstLine.getStyleClass().add("container");
         HBox secondLine = new HBox();
         secondLine.getStyleClass().add("container");
-        ScrollPane thirdLine = new ScrollPane();
+        final ScrollPane thirdLine = new ScrollPane();
         thirdLine.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         thirdLine.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         thirdLine.setPrefHeight(Integer.MAX_VALUE);
@@ -54,11 +57,11 @@ public class App extends Application
         root.getChildren().add(secondLine);
         root.getChildren().add(thirdLine);
 
-        TextField searchField = new TextField();
+        final TextField searchField = new TextField();
         searchField.setPrefWidth(Integer.MAX_VALUE);
-        ComboBox<String> searchTypes = new ComboBox<String>();
+        final ComboBox<String> searchTypes = new ComboBox<String>();
         searchTypes.getItems().add("Nazwa");
-        searchTypes.getItems().add("Sklep");
+        searchTypes.getItems().add("Id");
         searchTypes.getItems().add("Składnik");
         searchTypes.setValue("Nazwa");
         searchTypes.setMinWidth(150);
@@ -66,9 +69,10 @@ public class App extends Application
         firstLine.getChildren().add(searchTypes);
 
         Button searchButton = new Button("Search");
+
         secondLine.getChildren().add(searchButton);
 
-        VBox results = new VBox();
+        final VBox results = new VBox();
         results.getStyleClass().add("container");
 
         results.getChildren().add(new Button("sdsdsdds"));
@@ -76,6 +80,30 @@ public class App extends Application
 
 
         mainScene.getStylesheets().add("StyleSheet.css");
+
+        searchButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                results.getChildren().clear();
+                if (searchTypes.getValue() == "Nazwa")
+                {
+                    System.out.println("Searching by name");
+                    System.out.println(searchField.getText());
+                }
+                if (searchTypes.getValue() == "Id")
+                {
+                    System.out.println("Searching by id");
+                    System.out.println(searchField.getText());
+                }
+                if (searchTypes.getValue() == "Składnik")
+                {
+                    System.out.println("Searching by ingredient");
+                    System.out.println(searchField.getText());
+                }
+            }
+        });
 
         primaryStage.show();
     }
