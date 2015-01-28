@@ -9,8 +9,11 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -143,6 +146,40 @@ public class SolrConnection {
     }
     
     public void addProduct(Product product) {
-    	
+		Doc document = Doc.fromProduct(product);
+        Gson gson = new Gson();
+
+        String dataJson = String.format(Strings.ADD_DOCUMENT, gson.toJson(document));
+        
+        try {
+	        URL url = new URL(Strings.URL_UPDATE);
+	
+	        
+	        HttpURLConnection httpcon = (HttpURLConnection) ((url.openConnection()));
+	        httpcon.setDoOutput(true);
+	        httpcon.setRequestProperty("Content-Type", "application/json");
+	        httpcon.setRequestProperty("Accept", "application/json");
+	        
+				httpcon.setRequestMethod("POST");
+			
+	        httpcon.connect();
+	
+	        byte[] outputBytes = dataJson.getBytes("UTF-8");
+	        OutputStream os = httpcon.getOutputStream();
+	        os.write(outputBytes);
+	        os.close();
+	        
+	        BufferedReader in = new BufferedReader(new InputStreamReader(
+	        		httpcon.getInputStream()));
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) {} //z jakiegos powodu musze pobrac input, bo inaczej nie dziala
+			in.close();
+			
+        } catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
+
 }
