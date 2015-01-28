@@ -35,7 +35,7 @@ public class Server {
     }
     
     public static void main(String[] args) throws IOException {
-        //ApplicationContext context = new ClassPathXmlApplicationContext("/context.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("/context.xml");
         SpringApplication.run(Server.class, args);
     }
 }

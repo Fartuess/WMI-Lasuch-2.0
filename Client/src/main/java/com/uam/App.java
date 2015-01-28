@@ -11,11 +11,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Collection;
 
 /**
  * Created by CLEVO on 2015-01-27.
  */
-public class App extends javafx.application.Application
+
+@ComponentScan
+public class App extends Application
 {
     public static void main(String[] args)
     {
@@ -69,5 +78,14 @@ public class App extends javafx.application.Application
         mainScene.getStylesheets().add("StyleSheet.css");
 
         primaryStage.show();
+    }
+
+    @Bean
+    public RestTemplate restTemplate()
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        //restTemplate.getMessageConverters().add(new Jaxb2CollectionHttpMessageConverter<Collection>());
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        return restTemplate;
     }
 }
