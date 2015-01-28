@@ -1,0 +1,11 @@
+package pl.edu.amu.lasuch.solr;
+
+public class Strings {
+	public static final String URL_BASE = "http://localhost:8983/solr/collection1";
+	public static final String URL_SELECT2 = URL_BASE + "/select?q=%s:%s&wt=json&indent=true";
+	public static final String URL_SELECT4 = URL_BASE + "/select?q=%s:%s%%20%s:%s&wt=json&indent=true";
+	public static final String URL_SELECT_ALL = URL_BASE + "/select?q=*:*&wt=json&indent=true";
+
+	public static final String PRODUCT_NOT_FOUND = "Nie znaleziono produktu";
+
+}

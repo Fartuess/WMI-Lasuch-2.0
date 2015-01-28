@@ -65,7 +65,7 @@ public class ProductController {
     
     @RequestMapping(method = RequestMethod.POST)
     public Product addProduct(@RequestBody Product product) {
-        
+    	solrConnection.addProduct(product);
         return product;
     }
 }
