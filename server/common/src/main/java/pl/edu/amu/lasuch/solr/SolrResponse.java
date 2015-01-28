@@ -1,5 +1,5 @@
 
-package pl.amu.edu.lasuch.restServer.Solr;
+package pl.edu.amu.lasuch.solr;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

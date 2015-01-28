@@ -1,5 +1,5 @@
 
-package pl.amu.edu.lasuch.restServer.Solr;
+package pl.edu.amu.lasuch.solr;
 
 import java.util.ArrayList;
 import java.util.List;
