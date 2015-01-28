@@ -11,22 +11,29 @@ import java.util.List;
 @XmlRootElement
 public class Product
 {
-    public static final String URL = "PUT URL HERE";
-
+    private int id;
     private String name;
-    private String store;
+    private String info;
+    private String url;
     private List<String> ingredients;
 
-    public Product()
+    public Product(int id, String name, String info, String url, List<String> ingredients)
     {
-
+        this.id = id;
+        this.name = name;
+        this.info = info;
+        this.url = url;
+        this.ingredients = ingredients;
     }
 
-    public Product(String name, String store, String... ingredients)
+    public int getId()
     {
-        this.name = name;
-        this.store = store;
-        this.ingredients = Arrays.asList(ingredients);
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public String getName()
@@ -39,14 +46,24 @@ public class Product
         this.name = name;
     }
 
-    public String getStore()
+    public String getInfo()
     {
-        return store;
+        return info;
     }
 
-    public void setStore(String store)
+    public void setInfo(String info)
     {
-        this.store = store;
+        this.info = info;
+    }
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 
     public List<String> getIngredients()
@@ -75,15 +92,16 @@ public class Product
     @Override
     public int hashCode()
     {
-        return (name != null && store != null) ? (name + store).hashCode() : 0;
+        return (name != null) ? (name + ((Integer)id).toString()).hashCode() : 0;
     }
 
     @Override
     public String toString()
     {
         final StringBuilder sb = new StringBuilder("Product[");
+        sb.append("id=").append(id);
         sb.append("name=").append(name);
-        sb.append(", store=").append(store);
+        sb.append(", info=").append(info);
         //sb.append(", description=").append(description);
         sb.append(", ingredients=").append(ingredients);
         sb.append(']');

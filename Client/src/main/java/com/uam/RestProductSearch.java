@@ -25,7 +25,7 @@ public class RestProductSearch
         return null;
     }
 
-    public List<Product> searchByStore(String store)
+    public List<Product> searchById(String id)
     {
         return null;
     }
