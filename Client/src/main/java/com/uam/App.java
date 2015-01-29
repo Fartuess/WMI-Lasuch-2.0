@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -75,8 +72,10 @@ public class App extends Application
         firstLine.getChildren().add(searchTypes);
 
         Button searchButton = new Button("Search");
+        Button addButton = new Button("Add new item");
 
         secondLine.getChildren().add(searchButton);
+        secondLine.getChildren().add(addButton);
 
         final VBox results = new VBox();
         results.getStyleClass().add("container");
@@ -134,6 +133,54 @@ public class App extends Application
                         results.getChildren().add(productItem);
                     }
                 }
+            }
+        });
+
+        addButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                VBox newRoot = new VBox();
+                newRoot.getStyleClass().add("container");
+                Scene newScene = new Scene(newRoot, 400, 300);
+                //newRoot.getChildren().add(new Label("testerino"));
+                Stage newWindow = new Stage();
+                newWindow.setScene(newScene);
+                newWindow.setTitle("Add new Product");
+
+                VBox namePane = new VBox();
+                namePane.getStyleClass().add("container");
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                namePane.getChildren().add(nameLabel);
+                namePane.getChildren().add(nameTextField);
+
+                VBox infoPane = new VBox();
+                infoPane.getStyleClass().add("container");
+                Label infoLabel = new Label("Info:");
+                TextArea infoTextField = new TextArea();
+                infoTextField.setPrefHeight(Integer.MAX_VALUE);
+                infoPane.getChildren().add(infoLabel);
+                infoPane.getChildren().add(infoTextField);
+
+                VBox ingredientsPane = new VBox();
+                ingredientsPane.getStyleClass().add("container");
+
+                HBox buttonPane = new HBox();
+                buttonPane.getStyleClass().add("container");
+                Button okButton = new Button("Ok");
+                Button cancelButton = new Button("Cancel");
+                buttonPane.getChildren().add(okButton);
+                buttonPane.getChildren().add(cancelButton);
+
+                newRoot.getChildren().add(namePane);
+                newRoot.getChildren().add(infoPane);
+                newRoot.getChildren().add(buttonPane);
+
+                newScene.getStylesheets().add("StyleSheet.css");
+
+                newWindow.show();
             }
         });
 
