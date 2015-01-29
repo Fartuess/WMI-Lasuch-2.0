@@ -7,6 +7,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,16 +23,19 @@ public class RestProductSearch
 
     public List<Product> searchByName(String name)
     {
-        return null;
+        List<Product> resultList = new ArrayList<Product>();
+        return resultList;
     }
 
     public List<Product> searchById(String id)
     {
-        return null;
+        List<Product> resultList = new ArrayList<Product>();
+        return resultList;
     }
 
     public List<Product> searchByIngredient(String ingredient)
     {
-        return null;
+        List<Product> resultList = new ArrayList<Product>();
+        return resultList;
     }
 }
