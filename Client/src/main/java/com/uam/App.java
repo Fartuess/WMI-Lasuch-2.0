@@ -29,6 +29,7 @@ import java.util.List;
 public class App extends Application
 {
     private RestProductSearch searchClass;
+    private RestProductPost postClass;
 
     public static void main(String[] args)
     {
@@ -39,6 +40,7 @@ public class App extends Application
     public void start(Stage primaryStage) throws Exception
     {
         searchClass = new RestProductSearch();
+        postClass = new RestProductPost();
 
         VBox root = new VBox();
         Scene mainScene = new Scene(root, 800, 600);
@@ -127,10 +129,13 @@ public class App extends Application
 
                 if (isChanged)
                 {
+                    int i = 0;
                     for (Product product : newResults)
                     {
+                        if (i > 20) break;
                         ProductItem productItem = new ProductItem(product);
                         results.getChildren().add(productItem);
+                        i++;
                     }
                 }
             }
@@ -145,21 +150,21 @@ public class App extends Application
                 newRoot.getStyleClass().add("container");
                 Scene newScene = new Scene(newRoot, 400, 300);
                 //newRoot.getChildren().add(new Label("testerino"));
-                Stage newWindow = new Stage();
+                final Stage newWindow = new Stage();
                 newWindow.setScene(newScene);
                 newWindow.setTitle("Add new Product");
 
                 VBox namePane = new VBox();
                 namePane.getStyleClass().add("container");
                 Label nameLabel = new Label("Name:");
-                TextField nameTextField = new TextField();
+                final TextField nameTextField = new TextField();
                 namePane.getChildren().add(nameLabel);
                 namePane.getChildren().add(nameTextField);
 
                 VBox infoPane = new VBox();
                 infoPane.getStyleClass().add("container");
                 Label infoLabel = new Label("Info:");
-                TextArea infoTextField = new TextArea();
+                final TextArea infoTextField = new TextArea();
                 infoTextField.setPrefHeight(Integer.MAX_VALUE);
                 infoPane.getChildren().add(infoLabel);
                 infoPane.getChildren().add(infoTextField);
@@ -179,6 +184,30 @@ public class App extends Application
                 newRoot.getChildren().add(buttonPane);
 
                 newScene.getStylesheets().add("StyleSheet.css");
+
+                cancelButton.setOnAction(new EventHandler<ActionEvent>()
+                {
+                    @Override
+                    public void handle(ActionEvent event)
+                    {
+                        newWindow.close();
+                    }
+                });
+
+                okButton.setOnAction(new EventHandler<ActionEvent>()
+                {
+                    @Override
+                    public void handle(ActionEvent event)
+                    {
+                        int id = 0; //temp
+                        String url = "";    //temp
+                        Product product = new Product(id, nameTextField.getText(), infoTextField.getText(), url, new ArrayList<String>());  //temp;
+
+                        postClass.postProduct(product);
+
+                        newWindow.close();
+                    }
+                });
 
                 newWindow.show();
             }
