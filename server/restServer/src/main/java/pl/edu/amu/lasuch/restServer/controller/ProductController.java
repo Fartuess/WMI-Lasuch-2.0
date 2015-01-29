@@ -59,8 +59,21 @@ public class ProductController {
         return new Product(doc.getID(), doc.getTitle(), doc.getInfo(), doc.getUrl(), doc.getIngredient());
     }
     
+    @RequestMapping(value="/name", method = RequestMethod.GET)
+    public List<Product> searchByName(@RequestParam("name") String name) throws URISyntaxException, IOException {
+        List<Product> result = new ArrayList<Product>();
+        
+        List<Doc> docs = solrConnection.searchProducts("title", name);
+        for (Doc d : docs) {
+            Product p = new Product(d.getID(), d.getTitle(), d.getInfo(), d.getUrl(), d.getIngredient());
+            result.add(p);
+        }
+        
+        return result;
+    }
+    
     @RequestMapping(value="/search", method = RequestMethod.GET)
-    public List<Product> search(@RequestParam("q") String query) throws URISyntaxException, IOException {
+    public List<Product> searchByIngredient(@RequestParam("q") String query) throws URISyntaxException, IOException {
         List<Product> result = new ArrayList<Product>();
         
         List<Doc> docs = solrConnection.searchProducts("ingredient", query);
