@@ -4,4 +4,5 @@
 /server/common/target/
 /server/.idea/
 /Client/.idea/
+/Client/target/
 /server/jms-server/activemq-data/
