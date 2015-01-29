@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.boot.SpringApplication;
 import javax.servlet.Filter;
+import org.springframework.jms.core.JmsTemplate;
 
 @ComponentScan
 @EnableAutoConfiguration
 @RestController
 public class Server {
     public static final String EXIT = "exit";
+    public static ApplicationContext context;
     
     @Bean
     public ServletRegistrationBean h2servletRegistration() {
@@ -35,7 +37,7 @@ public class Server {
     }
     
     public static void main(String[] args) throws IOException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("/context.xml");
+        context = new ClassPathXmlApplicationContext("/context.xml");
         SpringApplication.run(Server.class, args);
     }
 }

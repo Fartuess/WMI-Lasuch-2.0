@@ -21,6 +21,10 @@ public class Product implements Serializable {
     private String url;
     private List<String> ingredients;
 
+    public Product() {
+        
+    }
+    
     public Product(int id, String name, String info, String url, List<String> ingredients) {
         this.id = id;
         this.name = name;

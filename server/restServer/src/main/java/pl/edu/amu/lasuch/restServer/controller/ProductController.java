@@ -10,16 +10,19 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.amu.edu.lasuch.restServer.service.SolrUpdateService;
+import pl.edu.amu.lasuch.restServer.service.SolrUpdateService;
 import pl.edu.amu.lasuch.model.Product;
+import pl.edu.amu.lasuch.restServer.Server;
 import pl.edu.amu.lasuch.solr.Doc;
 import pl.edu.amu.lasuch.solr.SolrConnection;
 
@@ -32,9 +35,12 @@ import pl.edu.amu.lasuch.solr.SolrConnection;
 @RequestMapping("/products")
 public class ProductController {
     private final SolrConnection solrConnection = new SolrConnection();
-    @Autowired
     private ApplicationContext context;
     
+    public ProductController() {
+        this.context = Server.context;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Product> products() throws URISyntaxException, IOException{
         List<Product> result = new ArrayList<Product>();
@@ -68,7 +74,9 @@ public class ProductController {
     
     @RequestMapping(method = RequestMethod.POST)
     public Product addProduct(@RequestBody Product product) {
+        
         SolrUpdateService solrUpdateService = (SolrUpdateService) context.getBean("solrUpdateService");
+        solrUpdateService.sendProduct(product);
         return product;
     }
 }

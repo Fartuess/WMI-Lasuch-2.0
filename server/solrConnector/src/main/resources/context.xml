@@ -25,4 +25,18 @@
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
+    
+    <bean id="productQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="productQueue"/>
+    </bean>
+    
+    <bean id="solrUpdaterService" class="pl.edu.amu.lasuch.solrConnector.service.SolrUpdaterService">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+    
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="messageListener" ref="solrUpdaterService"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="productQueue"/>
+    </bean>
 </beans>
